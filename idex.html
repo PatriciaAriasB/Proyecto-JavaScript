@@ -13,11 +13,13 @@
 
     <div id="home">
         <form id="nameForm">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-            <button type="submit">Submit</button>
-          </form><br><br>
-        <button id="start-btn" type="button" class="btn btn-primary justify-content-center ">Comenzar preguntas</button>
+       
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Username" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-primary" type="button" id="start-btn">Start Questions</button>
+          </div>
+
+
 
     </div>
 
@@ -29,7 +31,7 @@
 
         </div>
         <div id="results" class="d-none">
-            <h1>Resultados</h1>
+            <h1>Results</h1>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

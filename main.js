@@ -3,11 +3,15 @@ const startButton = document.getElementById("start-btn");
 const nextButton = document.getElementById("next-btn");
 const questionElement = document.getElementById("questions");
 const answerButtonsElement = document.getElementById("answer-buttons");
+//const usernameInput = document.querySelector('input[type="text"]');
+
 
 const API_URL = "https://quizapi.io/api/v1/questions?apiKey=q5kU1p9KmRLUts72IgoZ7SB5U9s3Sen3myX4selL&limit=10";
 
 let currentQuestion = 0;
 let questions = [];
+
+
 
 const getInfo = async () => {
     try {
@@ -78,3 +82,10 @@ function selectAnswer() {
 
 
 startButton.addEventListener('click', startQuestions);
+
+// startButton.addEventListener('click', function() {
+//     // Mostrar el botón "Next"
+//     nextButton.classList.remove('d-none');
+//     // Ocultar el formulario de inicio
+//     homeDiv.classList.add('d-none');
+//});
