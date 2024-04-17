@@ -3,15 +3,11 @@ const startButton = document.getElementById("start-btn");
 const nextButton = document.getElementById("next-btn");
 const questionElement = document.getElementById("questions");
 const answerButtonsElement = document.getElementById("answer-buttons");
-//const usernameInput = document.querySelector('input[type="text"]');
-
 
 const API_URL = "https://quizapi.io/api/v1/questions?apiKey=q5kU1p9KmRLUts72IgoZ7SB5U9s3Sen3myX4selL&limit=10";
 
 let currentQuestion = 0;
 let questions = [];
-
-
 
 const getInfo = async () => {
     try {
@@ -22,45 +18,10 @@ const getInfo = async () => {
     }
 }
 
-const startQuitz = () => {
-    try {
-        const question = questions[currentQuestion];
-        questionElement.innerText = question.question;
-        let correctAnswer = "";
-
-        Object.keys(question.correct_answers).forEach(answer => {
-            if (question.correct_answers[answer] === "true") {
-                correctAnswer = answer.substring(0, 8);
-            }
-        });
-
-        Object.entries(question.answers).forEach(([key, value]) => {
-            if (value !== null) {
-                const button = document.createElement("button");
-                button.innerText = value;
-                answerButtonsElement.appendChild(button);
-
-                
-                if (key === correctAnswer) {
-                    button.classList.add("correct");
-                } else {
-                    button.classList.add("incorrect");
-                }
-
-                button.addEventListener("click", selectAnswer);
-            }
-        });
-
-        questionElement.appendChild(answerButtonsElement);
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-const startQuestions = async () => {
+const startQuiz = async () => {
     try {
         await getInfo();
-        startQuitz();
+        showQuestion();
         homeDiv.classList.add('d-none');
         nextButton.classList.remove('d-none');
     } catch (error) {
@@ -68,24 +29,40 @@ const startQuestions = async () => {
     }
 };
 
-function selectAnswer() {
-  Array.from(answerButtonsElement.children).forEach((button) => {
-    setStatusClass(button);
-  });
-  if (questions.length > currentQuestion + 1) {
+const showQuestion = () => {
+    const question = questions[currentQuestion];
+    questionElement.innerText = question.question;
+    answerButtonsElement.innerHTML = '';
+
+    Object.entries(question.answers).forEach(([key, value]) => {
+        if (value !== null) {
+            const button = document.createElement("button");
+            button.innerText = value;
+            button.classList.add("grey"); 
+            button.addEventListener("click", () => selectAnswer(key)); 
+            answerButtonsElement.appendChild(button);
+        }
+    });
+
+    questionElement.appendChild(answerButtonsElement);
+};
+
+const selectAnswer = (selectedAnswerKey) => {
+    const question = questions[currentQuestion];
+    const correctAnswerKey = Object.keys(question.correct_answers).find(key => question.correct_answers[key] === "true");
+
+    Array.from(answerButtonsElement.children).forEach(button => {
+        button.classList.remove("grey"); 
+        if (button.innerText === question.answers[correctAnswerKey]) {
+            button.classList.add("correct"); 
+        } else if (button.innerText === question.answers[selectedAnswerKey]) {
+            button.classList.add("incorrect"); 
+        }
+        button.disabled = true; 
+    });
+
     nextButton.classList.remove("d-none");
-  } else {
-    startButton.innerText = "Restart";
-    startButton.classList.remove("d-none");
-  }
-}
+};
 
+startButton.addEventListener('click', startQuiz);
 
-startButton.addEventListener('click', startQuestions);
-
-// startButton.addEventListener('click', function() {
-//     // Mostrar el botón "Next"
-//     nextButton.classList.remove('d-none');
-//     // Ocultar el formulario de inicio
-//     homeDiv.classList.add('d-none');
-//});
