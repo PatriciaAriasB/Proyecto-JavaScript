@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="bootstrap.min.css" />
     <title>Proyecto JavaScript</title>
 </head>
@@ -12,11 +13,11 @@
 
     <div id="home">
         <form id="nameForm">
-            <label for="name">Nombre:</label>
+            <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
-            <button type="submit">Enviar</button>
+            <button type="submit">Submit</button>
           </form><br><br>
-        <button id="start-btn" type="button" class="btn btn-primary btn-lg">Comenzar preguntas</button>
+        <button id="start-btn" type="button" class="btn btn-primary justify-content-center ">Comenzar preguntas</button>
 
     </div>
 
@@ -24,7 +25,7 @@
 
             <button type="button" class="btn btn-primary btn-lg d-none"  id="next-btn">Next</button>
 
-            <div id="answer-buttons"></div>
+            <div id="answer-buttons" type="button" class="btn btn-success"></button></div>
 
         </div>
         <div id="results" class="d-none">

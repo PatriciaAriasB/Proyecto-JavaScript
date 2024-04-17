@@ -1,7 +1,6 @@
 const homeDiv = document.getElementById("home");
 const startButton = document.getElementById("start-btn");
 const nextButton = document.getElementById("next-btn");
-//const questionContainerElement = document.getElementById("question-container");
 const questionElement = document.getElementById("questions");
 const answerButtonsElement = document.getElementById("answer-buttons");
 
@@ -11,78 +10,71 @@ let currentQuestion = 0;
 let questions = [];
 
 const getInfo = async () => {
-  try { const response = await axios.get (API_URL);
-    questions = response.data;
-     
-  } catch (error) {
-    console.error(error);
-  }
-
-}
-getInfo()
-
-const startQuitz = async () => {
-  try {
-    const question = questions[currentQuestion];
-    questionElement.innerText = question.question;
-    let correctAnswer=""
-
-    Object.keys(question.correct_answers).forEach(answer=>{
-      if(question.correct_answers[answer] =="true"){
-        correctAnswer=answer.substring(0,8)
-        console.log(correctAnswer);
-      }
-    })
-    Object.values(question.answers).forEach(answer => {
-      if(answer !==null){
-
-        const button = document.createElement("button");
-        button.innerText = answer;
-        answerButtonsElement.appendChild(button);
-      }
-   
-    });
-    console.log(question);
-
-    questionElement.appendChild(answerButtonsElement)
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-const showQuestions = async (question) => {
-  questionElement.innerText = question.question;
-  question.answers.forEach((answer) => {
-    const button = document.createElement("button");
-    button.innerText = answer.text;
-
-    if (answer.correct) {
-      button.dataset.correct = true;
+    try {
+        const response = await axios.get(API_URL);
+        questions = response.data;
+    } catch (error) {
+        console.error(error);
     }
-    answerButtonsElement.appendChild(button);
-  });
 }
 
+const startQuitz = () => {
+    try {
+        const question = questions[currentQuestion];
+        questionElement.innerText = question.question;
+        let correctAnswer = "";
+
+        Object.keys(question.correct_answers).forEach(answer => {
+            if (question.correct_answers[answer] === "true") {
+                correctAnswer = answer.substring(0, 8);
+            }
+        });
+
+        Object.entries(question.answers).forEach(([key, value]) => {
+            if (value !== null) {
+                const button = document.createElement("button");
+                button.innerText = value;
+                answerButtonsElement.appendChild(button);
+
+                
+                if (key === correctAnswer) {
+                    button.classList.add("correct");
+                } else {
+                    button.classList.add("incorrect");
+                }
+
+                button.addEventListener("click", selectAnswer);
+            }
+        });
+
+        questionElement.appendChild(answerButtonsElement);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 const startQuestions = async () => {
-  try {
-    const response = await axios.get(API_URL);
-    questions = response.data;
-    startQuitz ();
-    homeDiv.classList.add('d-none');
-    nextButton.classList.remove('d-none');
-
-
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+        await getInfo();
+        startQuitz();
+        homeDiv.classList.add('d-none');
+        nextButton.classList.remove('d-none');
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-
-function displayNextQuestion() {
-  currentQuestion++;
+function selectAnswer() {
+  Array.from(answerButtonsElement.children).forEach((button) => {
+    setStatusClass(button);
+  });
+  if (questions.length > currentQuestion + 1) {
+    nextButton.classList.remove("d-none");
+  } else {
+    startButton.innerText = "Restart";
+    startButton.classList.remove("d-none");
+  }
 }
 
+
 startButton.addEventListener('click', startQuestions);
-
-
