@@ -69,9 +69,20 @@ text-align: center;
   z-index: -1;
 }
 
-#content {
-  position: relative;
-  z-index: 1;
-  padding: 20px;
-  color: #fff; /* Cambia el color del texto para que sea visible sobre el video */
+@keyframes move-up {
+  0% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-20px); 
+  }
+  100% {
+      transform: translateY(0);
+  }
+}
+
+.start-test {
+  animation: move-up 2s infinite; 
+  
+
 }

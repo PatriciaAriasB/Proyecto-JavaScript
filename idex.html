@@ -7,30 +7,25 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="bootstrap.min.css" />
     <title>Proyecto JavaScript</title>
+    
 </head>
 
 <body><br>
-
+    
     <video autoplay muted loop id="video-bg">
         <source src="Background.mp4" type="video/mp4">
     </video>
 
     <div id="home">
+         <h1 class="start-test">START QUITZ</h1>
+       
         <form id="nameForm">
 
-
             <div class="input-group mb-3">
-
-
                 <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                    aria-describedby="button-addon2">
-
-
-                <button class="btn btn-primary" type="button" id="start-btn">Start Questions</button>
+                    aria-describedby="button-addon2" id="username" required>
+                <button class="btn btn-primary" type="button" id="start-btn">Questions</button>
             </div>
-
-
-
     </div>
 
     <div id="questions" class="d-none">

@@ -11,11 +11,22 @@ const result = document.getElementById("result");
 
 const API_URL = "https://quizapi.io/api/v1/questions?apiKey=q5kU1p9KmRLUts72IgoZ7SB5U9s3Sen3myX4selL&limit=10";
 
+startButton.disabled = true;
+
+const usernameInput = document.getElementById("username");
+usernameInput.addEventListener("input", function() {
+   
+    if (usernameInput.value.trim() !== "") {
+        startButton.disabled = false;
+    } else {
+      
+        startButton.disabled = true;
+    }
+});
+
 let score = 0;
 let currentQuestion = 0;
 let questions = [];
-
-
 
 const getInfo = async () => {
     try {
@@ -47,18 +58,18 @@ const showQuestion = () => {
         if (value !== null) {
             const button = document.createElement("button");
 
-            //     button.classList.add("badge"); 
-            //     button.classList.add("rounded-pill"); 
-            //    button.classList.add("bg-warning"); 
-
-            button.classList.add()
+                //  button.classList.add("badge"); 
+                //  button.classList.add("rounded-pill"); 
+                //  button.classList.add("bg-warning"); 
+    
             button.innerText = value;
+            button.dataset.correctAnswer = question.correct_answers[key]; 
+    
             button.addEventListener("click", () => {
                 selectAnswer(key, button);
-                if (button.dataset.correctAnswer === "true") {
-
-                }
+                
             });
+    
             answerButtonsElement.appendChild(button);
         }
     });
@@ -87,8 +98,6 @@ const selectAnswer = (selectedAnswerKey, button) => {
     if (button.getAttribute("correct") == "correct") {
         score++;
         scorePoints.innerHTML = "";
-
-
     }
 
     if (questions.length > currentQuestion + 1) {
@@ -100,7 +109,6 @@ const selectAnswer = (selectedAnswerKey, button) => {
         resultsDiv.classList.remove('d-none');
         result.innerHTML = `<p> ${score} POINTS <p>`;
     }
-
 };
 
 startButton.addEventListener('click', startQuiz);
@@ -108,9 +116,7 @@ startButton.addEventListener('click', startQuiz);
 function setNextQuestion() {
     showQuestion(questions[currentQuestion]);
     nextButton.classList.add('d-none');
-
 }
-
 nextButton.addEventListener("click", () => {
     currentQuestion++;
     setNextQuestion();
