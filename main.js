@@ -39,6 +39,7 @@ const showQuestion = () => {
         if (value !== null) {
             const button = document.createElement("button");
             button.innerText = value;
+            console.log();
             // button.classList.add("badge"); 
             // button.classList.add("rounded-pill"); 
             // button.classList.add("bg-warning"); 
@@ -52,8 +53,7 @@ const showQuestion = () => {
 
 const selectAnswer = (selectedAnswerKey) => {
     const question = questions[currentQuestion];
-    const correctAnswerKey = Object.keys(question.correct_answers).find(key => question.correct_answers[key] === "true");
-    
+    const correctAnswerKey = Object.keys(question.correct_answers).find(key => question.correct_answers[key] === "true").substring(0,8);
 
     Array.from(answerButtonsElement.children).forEach(button => {
         button.classList.remove("grey"); 
@@ -70,3 +70,21 @@ const selectAnswer = (selectedAnswerKey) => {
 
 startButton.addEventListener('click', startQuiz);
 
+function setNextQuestion() {
+    showQuestion(questions[currentQuestion]);
+    nextButton.classList.add('d-none');
+  }
+  
+
+nextButton.addEventListener("click", () => {
+    currentQuestion++;
+    setNextQuestion();
+
+   
+  });
+
+  function resetState() {
+    nextButton.classList.add("d-none");
+    answerButtonsElement.innerHTML=""
+  }
+  
