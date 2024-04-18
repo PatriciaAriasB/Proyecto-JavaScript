@@ -15,11 +15,13 @@ let score = 0;
 let currentQuestion = 0;
 let questions = [];
 
+
+
 const getInfo = async () => {
     try {
         const response = await axios.get(API_URL);
         questions = response.data;
-       
+
     } catch (error) {
         console.error(error);
     }
@@ -45,50 +47,50 @@ const showQuestion = () => {
         if (value !== null) {
             const button = document.createElement("button");
 
-        //     button.classList.add("badge"); 
-        //     button.classList.add("rounded-pill"); 
-        //    button.classList.add("bg-warning"); 
+            //     button.classList.add("badge"); 
+            //     button.classList.add("rounded-pill"); 
+            //    button.classList.add("bg-warning"); 
 
-
-            button.classList.add ()
+            button.classList.add()
             button.innerText = value;
             button.addEventListener("click", () => {
                 selectAnswer(key, button);
                 if (button.dataset.correctAnswer === "true") {
-                
+
                 }
             });
             answerButtonsElement.appendChild(button);
         }
-    }); 
+    });
 
     questionElement.appendChild(answerButtonsElement);
 };
 
 const selectAnswer = (selectedAnswerKey, button) => {
-  
-    
+
     const question = questions[currentQuestion];
     const correctAnswerKey = Object.keys(question.correct_answers).find(key => question.correct_answers[key] === "true").substring(0, 8);
-    
+
     Array.from(answerButtonsElement.children).forEach(button => {
-        // button.classList.remove("grey");
+
         if (button.innerText === question.answers[correctAnswerKey]) {
             button.classList.add("correct");
-            button.setAttribute("correct","correct");
+            button.setAttribute("correct", "correct");
+
         } else if (button.innerText === question.answers[selectedAnswerKey]) {
             button.classList.add("incorrect");
-            
+
         }
         button.disabled = true;
     });
-    
-    if (button.getAttribute("correct")=="correct") {
+
+    if (button.getAttribute("correct") == "correct") {
         score++;
-        scorePoints.innerHTML =`<p>Points: ${score}</p>` ;
-     
+        scorePoints.innerHTML = "";
+
+
     }
-    
+
     if (questions.length > currentQuestion + 1) {
         nextButton.classList.remove('d-none');
     } else {
@@ -98,7 +100,6 @@ const selectAnswer = (selectedAnswerKey, button) => {
         resultsDiv.classList.remove('d-none');
         result.innerHTML = `<p> ${score} POINTS <p>`;
     }
-    //nextButton.classList.remove('d-none');
 
 };
 
@@ -107,13 +108,12 @@ startButton.addEventListener('click', startQuiz);
 function setNextQuestion() {
     showQuestion(questions[currentQuestion]);
     nextButton.classList.add('d-none');
-}
 
+}
 
 nextButton.addEventListener("click", () => {
     currentQuestion++;
     setNextQuestion();
-
 
 });
 

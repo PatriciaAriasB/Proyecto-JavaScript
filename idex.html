@@ -11,12 +11,21 @@
 
 <body><br>
 
+    <video autoplay muted loop id="video-bg">
+        <source src="Background.mp4" type="video/mp4">
+    </video>
+
     <div id="home">
         <form id="nameForm">
 
+
             <div class="input-group mb-3">
+
+
                 <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                     aria-describedby="button-addon2">
+
+
                 <button class="btn btn-primary" type="button" id="start-btn">Start Questions</button>
             </div>
 
@@ -32,7 +41,7 @@
             <button type="answer-buttons" class=" rounded-pill bg-warning d-none"></button>
         </div>
     </div>
-    <button type="button" class="btn btn-primary btn-lg d-none" id="next-btn">Next</button>
+    <button type="button" class="btn btn-primary btn-sm d-none" id="next-btn">Next >> </button>
 
     <div id="scoreDisplay"></div>
 
