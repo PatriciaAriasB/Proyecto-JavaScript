@@ -7,7 +7,7 @@ const answerButtonsElement = document.getElementById("answer-buttons");
 const scorePoints = document.getElementById("scoreDisplay");
 const resultsDiv = document.getElementById("results");
 const result = document.getElementById("result");
-console.log(result);
+
 
 const API_URL = "https://quizapi.io/api/v1/questions?apiKey=q5kU1p9KmRLUts72IgoZ7SB5U9s3Sen3myX4selL&limit=10";
 
@@ -19,7 +19,7 @@ const getInfo = async () => {
     try {
         const response = await axios.get(API_URL);
         questions = response.data;
-        console.log(questions);
+       
     } catch (error) {
         console.error(error);
     }
@@ -41,10 +41,16 @@ const showQuestion = () => {
     questionDiv.innerText = question.question;
     answerButtonsElement.innerHTML = '';
 
-    console.log("JEJEJE");
     Object.entries(question.answers).forEach(([key, value]) => {
         if (value !== null) {
             const button = document.createElement("button");
+
+        //     button.classList.add("badge"); 
+        //     button.classList.add("rounded-pill"); 
+        //    button.classList.add("bg-warning"); 
+
+
+            button.classList.add ()
             button.innerText = value;
             button.addEventListener("click", () => {
                 selectAnswer(key, button);
@@ -54,13 +60,13 @@ const showQuestion = () => {
             });
             answerButtonsElement.appendChild(button);
         }
-    }); console.log("llegué");
+    }); 
 
     questionElement.appendChild(answerButtonsElement);
 };
 
 const selectAnswer = (selectedAnswerKey, button) => {
-    console.log(selectedAnswerKey, button);
+  
     
     const question = questions[currentQuestion];
     const correctAnswerKey = Object.keys(question.correct_answers).find(key => question.correct_answers[key] === "true").substring(0, 8);
@@ -76,11 +82,11 @@ const selectAnswer = (selectedAnswerKey, button) => {
         }
         button.disabled = true;
     });
-    console.log(score);
+    
     if (button.getAttribute("correct")=="correct") {
         score++;
         scorePoints.innerHTML =`<p>Points: ${score}</p>` ;
-        console.log(score);
+     
     }
     
     if (questions.length > currentQuestion + 1) {
@@ -90,7 +96,7 @@ const selectAnswer = (selectedAnswerKey, button) => {
         questionElement.classList.add('d-none');
         scorePoints.classList.add('d-none');
         resultsDiv.classList.remove('d-none');
-        result.innerHTML = `<p>Tu resultado es ${score}<p>`;
+        result.innerHTML = `<p> ${score} POINTS <p>`;
     }
     //nextButton.classList.remove('d-none');
 
